@@ -1,0 +1,79 @@
+{
+    "folders": [
+        {
+            "path": "../"
+        },
+        {
+            "path": "C:/CSDTK42/SDK/include/"
+        },
+        {
+            "path": "C:/CSDTK42/SDK/libs/"
+        }
+    ],
+    "settings": {
+        "C_Cpp.default.includePath": [
+            "${workspaceFolder}/**",
+            "C:/CSDTK42/SDK/include/**",
+            "C:/CSDTK42/SDK/lib/**"
+        ],
+        "C_Cpp.default.cStandard": "c99",
+        "C_Cpp.default.cppStandard": "c++11",
+        "C_Cpp.default.compilerPath": "C:/CSDTK42/SDK/build.bat",
+        "files.associations": {
+            "*.cpp": "cpp",
+            "sdkConfig.h": "c",
+            "stdbool.h": "c",
+            "stdint.h": "c",
+            "api_hal_uart.h": "c",
+            "stdio.h": "c",
+            "api_debug.h": "c",
+            "sdk_init.h": "c",
+            "sdk_config.h": "c"
+        }
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "build",
+                "command": "a9gTools",
+                "type": "shell",
+                "args": ["build"],
+                "problemMatcher": [],
+                "presentation": {
+                    "reveal": "always"
+                },
+                "group": {
+                    "kind": "build",
+                    "isDefault": false
+                },
+                "options": {
+                    "cwd": "${workspaceFolder}"
+                }
+            },
+            {
+                "label": "load",
+                "command": "a9gTools",
+                "type": "shell",
+                "args": ["load"],
+                "problemMatcher": [],
+                "presentation": {
+                    "reveal": "always"
+                },
+                "group": {
+                    "kind": "build",
+                    "isDefault": false
+                },
+                "options": {
+                    "cwd": "${workspaceFolder}"
+                }
+            }
+        ]
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-vscode.cpptools",
+            "ms-vscode.makefile-tools"
+        ]
+    }
+}

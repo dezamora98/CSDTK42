@@ -2,6 +2,8 @@
 
 This repository contains an enhanced SDK for the AiThinker A9G development board. The main feature is the inclusion of `A9GTools`, a command-line interface tool that simplifies project creation and management. Currently, `A9GTools` is only available for Windows.
 
+![Video demostration](https://youtu.be/G1WOhVJ2Qkk)
+
 ## A9GTools
 
 A9GTools provides the following commands to streamline your workflow:

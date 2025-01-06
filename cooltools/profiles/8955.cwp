@@ -17,7 +17,7 @@ chipgen/Modem2G/toolpool/map/8809/8955_soft_pkg.xmd</softXmd>
 <lastCfpForFlamulator></lastCfpForFlamulator>
 <lastCoolGDBConfiguration>rbbase/common/plugins/CoolGDB/profiles/8809_xcpu.cgdb</lastCoolGDBConfiguration>
 <lastFlashProgForFastpf>C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod</lastFlashProgForFastpf>
-<lastLodForDownload>D:/test/hex/app/app_B2130_debug.lod</lastLodForDownload>
+<lastLodForDownload>D:/Desktop/test0/hex/app_B2130_debug.lod</lastLodForDownload>
 <lastLodForRomburn></lastLodForRomburn>
 <lastcomport>7</lastcomport>
 <pathToGDB>C:/CSDTK/cygwin/coolgdb/bin</pathToGDB>

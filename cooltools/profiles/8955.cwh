@@ -1,4 +1,10 @@
 --- 
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/Desktop/test0/hex/app_B2130_debug.lod"
+- fastpfGo()
+- D:/Desktop/test0/hex/app_B2130_debug.lod
+- fastpfChooseLod()
+- restart(false)
+- fastpfChooseLod()
 - fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/test/hex/app/app_B2130_debug.lod"
 - fastpfGo()
 - fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/test/hex/app/app_B2130_debug.lod"

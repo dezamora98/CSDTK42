@@ -1,11 +1,11 @@
 @echo off
-REM Llama al script de Python pasando todos los argumentos
+set VENV_PATH=C:\CSDTK42\A9GTools
+set PYTHON_EXE=%VENV_PATH%\bin\python.exe
+set SCRIPT_PATH=C:\CSDTK42\A9GTools\scripts\main.py
 
-REM Cambiar la ruta al intérprete de Python si es necesario
-set PYTHON_EXE=python
-
-REM Cambiar la ruta al script de Python
-set SCRIPT_PATH=C:\CSDTK42\A9GTools\main.py
-
-REM Llama al script de Python pasando todos los argumentos
-%PYTHON_EXE% %SCRIPT_PATH% %*
+if exist %VENV_PATH% (
+    echo Activating virtual environment...
+    %PYTHON_EXE% %SCRIPT_PATH% %*
+) else (
+    echo Virtual environment not found. Please create the virtual environment first.
+)

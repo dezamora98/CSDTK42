@@ -1,7 +1,3 @@
-
-
-
-
 # Name of the this module
 LOCAL_NAME := libs/lvgl
 

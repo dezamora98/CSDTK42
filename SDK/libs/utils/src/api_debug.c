@@ -56,26 +56,11 @@ void Trace_MemBlock(uint16_t nIndex, uint8_t *buffer, uint16_t len, uint8_t radi
 
 static char printBuffer[256];
 
-void setIOInterface()
+void uPrintf(UART_Port_t uart,const char *format, ...)
 {
-    if (sdkConfig.io_interface != TRACE)
-    {
-        UART_Init(sdkConfig.io_interface, DEFAULT_UART_CONFIG);
-    }
-}
-
-void uPrintf(const char *format, ...)
-{
-    if (sdkConfig.io_interface != TRACE)
-    {
-        va_list args;
-        va_start(args, format);
-        vsnprintf(printBuffer, sizeof(printBuffer), format, args);
-        UART_Write(sdkConfig.io_interface, (uint8_t *)printBuffer, strlen(printBuffer));
-        va_end(args);
-    }
-    else
-    {
-        tPrintf("ERROR => IO UART interface not configured");
-    }
+    va_list args;
+    va_start(args, format);
+    vsnprintf(printBuffer, sizeof(printBuffer), format, args);
+    UART_Write(uart, (uint8_t *)printBuffer, strlen(printBuffer));
+    va_end(args);
 }

@@ -4,11 +4,10 @@ LOCAL_NAME := libs
 
 # Space-separated list of modules (libraries) your module depends upon.
 # These should include the toplevel name, e.g. "libs/gps"
-LOCAL_MODULE_DEPENDS := libs/gps \
-                        libs/utils \
+LOCAL_MODULE_DEPENDS := libs/utils \
+                        libs/gps \
                         libs/cjson \
                         libs/tiny-json \
-                        #libs/freemodbus \
                         
 ifeq "$(strip ${CFG_LCD_SUPPORT})" "y"
     LOCAL_MODULE_DEPENDS += libs/lcd 

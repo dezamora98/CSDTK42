@@ -28,7 +28,8 @@
             "stdio.h": "c",
             "api_debug.h": "c",
             "sdk_init.h": "c",
-            "sdk_config.h": "c"
+            "sdk_config.h": "c",
+            "string.h": "c"
         }
     },
     "tasks": {
@@ -52,10 +53,44 @@
                 }
             },
             {
-                "label": "load",
+                "label": "coolwatcher",
                 "command": "a9gTools",
                 "type": "shell",
                 "args": ["load"],
+                "problemMatcher": [],
+                "presentation": {
+                    "reveal": "always"
+                },
+                "group": {
+                    "kind": "build",
+                    "isDefault": false
+                },
+                "options": {
+                    "cwd": "${workspaceFolder}"
+                }
+            },
+            {
+                "label": "clean",
+                "command": "a9gTools",
+                "type": "shell",
+                "args": ["clean"],
+                "problemMatcher": [],
+                "presentation": {
+                    "reveal": "always"
+                },
+                "group": {
+                    "kind": "build",
+                    "isDefault": false
+                },
+                "options": {
+                    "cwd": "${workspaceFolder}"
+                }
+            },
+            {
+                "label": "fota",
+                "command": "a9gTools",
+                "type": "shell",
+                "args": ["clean"],
                 "problemMatcher": [],
                 "presentation": {
                     "reveal": "always"
@@ -73,7 +108,6 @@
     "extensions": {
         "recommendations": [
             "ms-vscode.cpptools",
-            "ms-vscode.makefile-tools"
         ]
     }
 }

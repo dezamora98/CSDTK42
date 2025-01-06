@@ -107,13 +107,12 @@ extern "C"
  * @param format Format string
  * @param ... Additional arguments
  */
-#define printf(format, ...)                   \
-    {                                         \
-        if (sdkConfig.io_interface != TRACE) \
-            uPrintf(format, ##__VA_ARGS__);   \
-        else                                  \
-            tPrintf(format, ##__VA_ARGS__);   \
-    }
+
+#if defined(IO_INTERFACE) &&  IO_INTERFACE != 0 //!TARCE
+#define printf(format, ...) uPrintf(IO_INTERFACE, format, ##__VA_ARGS__)
+#else
+#define printf(format, ...) tPrintf(format, ##__VA_ARGS__)
+#endif //IO_INTERFACE
 
 #ifdef __cplusplus
 }

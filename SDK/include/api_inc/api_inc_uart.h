@@ -7,7 +7,6 @@
 /*#################      uart      #################################*/
 typedef enum
 {
-    TRACE = 0,  //does not work as UART interface
     UART1 = 1,
     UART2 = 2,
     UART_GPS = 2,

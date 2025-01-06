@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.cpp": "cpp",
+        "stdbool.h": "c",
+        "stdio.h": "c",
+        "api_os.h": "c"
+    }
+}

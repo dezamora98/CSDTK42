@@ -96,18 +96,3 @@ Examples refer to the [demo](https://github.com/Ai-Thinker-Open/GPRS_C_SDK/tree/
 **Doumentation** here:  [GPRS C SDK DOC](https://ai-thinker-open.github.io/GPRS_C_SDK_DOC/en)
 
 Including environment installation, burn & debug, api docs etc.
-
-
-## ( E ) Feedback
-
-* [creat issue on github](https://github.com/Ai-Thinker-Open/GPRS-C-SDK/issues/new)
-
-* Or [discuss on forum ](http://bbs.ai-thinker.com/forum.php?mod=forumdisplay&fid=37)
-
-* Click ★ <kbd> Star </kbd> on the right conner of this page if this repo helps you
-
-
-
-## ( F ) Participate in the development
-
-fork -> modify -> submit PR

@@ -1,4 +1,35 @@
 --- 
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/test/hex/app/app_B2130_debug.lod"
+- fastpfGo()
+- restart(false)
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/test/hex/app/app_B2130_debug.lod"
+- fastpfGo()
+- D:/test/hex/app/app_B2130_debug.lod
+- fastpfChooseLod()
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/sdk_test/hex/app/app_B2130_debug.lod"
+- fastpfGo()
+- D:/sdk_test/hex/app/app_B2130_debug.lod
+- fastpfChooseLod()
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/sdk_test/hex/app/app_B2130_debug.lod"
+- fastpfGo()
+- D:/sdk_test/hex/app/app_B2130_debug.lod
+- fastpfChooseLod()
+- activateTracerGui()
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/sdk_test/hex/app/app_B2130_debug.lod"
+- fastpfGo()
+- C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod
+- fastpfChooseFlashProgrammer()
+- fastpfGo "D:/Program/CSDTK42_old/cooltools/chipgen/Modem2G/toolpool/plugins/fastpf/flash_programmers/host_8955_flsh_spi32m_ramrun.lod", "D:/sdk_test/hex/app/app_B2130_debug.lod"
+- fastpfGo()
+- D:/sdk_test/hex/app/app_B2130_debug.lod
+- fastpfChooseLod()
+- restart(false)
+- restart(false)
+- restart(false)
+- restart(false)
+- restart(false)
+- restart(false)
+- restart(false)
 - "?"
 - fastpfChooseFlashProgrammer()
 - D:/Program/CSDTK42_old/cooltools/chipgen/Modem2G/toolpool/plugins/fastpf/flash_programmers/host_8955_flsh_spi32m_ramrun.lod

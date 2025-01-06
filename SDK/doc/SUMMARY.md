@@ -1,9 +1,5 @@
 # Summary
 
-## introduces
-
-* [About](README.md)
-
 ## Hardware
 
 * [A9](hardware/a9.md)
@@ -19,12 +15,6 @@
 
 ## C SDK
 
-* [Installation Windows](c-sdk/installation.md)
-* [Installation Linux](c-sdk/installation_linux.md)
-* [Installation Docker](c-sdk/installation_docker.md)
-* [Burn & Debug](c-sdk/burn-debug.md)
-* [First Code](c-sdk/first-code.md)
-* [Code Style](c-sdk/code-style.md)
 * [Function & API](c-sdk/function-api.md)
   * [GPIO](c-sdk/function-api/gpio.md)
   * [ADC](c-sdk/function-api/adc.md)

@@ -126,6 +126,14 @@ typedef struct{
 /// \return bool
 #define UART_Close                          CSDK_FUNC(UART_Close)
 
+/**
+ * @brief Print in UARTX"
+ * @param uart Uart port interface
+ * @param format Format string
+ * @param ... Additional arguments
+ */
+void uPrintf(UART_Port_t uart,const char *format, ...);
+
 void UART_EventManagment_init(EventManagment_t fn);
 
 #endif //__API_HAL_UART_H__

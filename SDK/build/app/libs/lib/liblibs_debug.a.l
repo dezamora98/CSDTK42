@@ -1,0 +1,17 @@
+C:/CSDTK42/SDK/build/app/libs/obj/debug/api_debug.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/api_event.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/assert.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/buffer.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/cJSON.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/cJSON_Utils.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/gps.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/gps_parse.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/hal_gpio.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/log2.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/log2f.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/math.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/minmea.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/ntp.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/stdlib.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/time.o
+C:/CSDTK42/SDK/build/app/libs/obj/debug/tiny-json.o

@@ -1,0 +1,11 @@
+C:/CSDTK42/SDK/build/app/libs/utils/obj/debug/api_debug.o
+C:/CSDTK42/SDK/build/app/libs/utils/obj/debug/api_event.o
+C:/CSDTK42/SDK/build/app/libs/utils/obj/debug/assert.o
+C:/CSDTK42/SDK/build/app/libs/utils/obj/debug/buffer.o
+C:/CSDTK42/SDK/build/app/libs/utils/obj/debug/hal_gpio.o
+C:/CSDTK42/SDK/build/app/libs/utils/obj/debug/log2.o
+C:/CSDTK42/SDK/build/app/libs/utils/obj/debug/log2f.o
+C:/CSDTK42/SDK/build/app/libs/utils/obj/debug/math.o
+C:/CSDTK42/SDK/build/app/libs/utils/obj/debug/ntp.o
+C:/CSDTK42/SDK/build/app/libs/utils/obj/debug/stdlib.o
+C:/CSDTK42/SDK/build/app/libs/utils/obj/debug/time.o

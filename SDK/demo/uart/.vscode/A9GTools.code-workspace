@@ -8,13 +8,17 @@
         },
         {
             "path": "C:/CSDTK42/SDK/libs/"
+        },
+        {
+            "path": "C:/CSDTK42/SDK/demo/"
         }
     ],
     "settings": {
         "C_Cpp.default.includePath": [
             "${workspaceFolder}/**",
             "C:/CSDTK42/SDK/include/**",
-            "C:/CSDTK42/SDK/lib/**"
+            "C:/CSDTK42/SDK/lib/**",
+            "C:/CSDTK42/SDK/init"
         ],
         "C_Cpp.default.cStandard": "c99",
         "C_Cpp.default.cppStandard": "c++11",
@@ -56,7 +60,7 @@
                 "label": "coolwatcher",
                 "command": "a9gTools",
                 "type": "shell",
-                "args": ["load"],
+                "args": ["coolwatcher"],
                 "problemMatcher": [],
                 "presentation": {
                     "reveal": "always"
@@ -90,7 +94,7 @@
                 "label": "fota",
                 "command": "a9gTools",
                 "type": "shell",
-                "args": ["clean"],
+                "args": ["fota"],
                 "problemMatcher": [],
                 "presentation": {
                     "reveal": "always"

@@ -28,7 +28,7 @@
 // 0 - Disabled: FOTA is not enabled
 // 1 - UART1: FOTA through UART1
 // 2 - UART2: FOTA through UART2
-#define ENABLE_UART_FOTA  1
+#define ENABLE_UART_FOTA  0
 
 // Default UART configuration for FOTA
 // This macro initializes a UART_Config_t structure with default settings for FOTA

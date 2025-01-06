@@ -1,6 +1,17 @@
 --- 
 - fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/test/hex/app/app_B2130_debug.lod"
 - fastpfGo()
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/test/hex/app/app_B2130_debug.lod"
+- fastpfGo()
+- restart(false)
+- activateTracerGui()
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/test/hex/app/app_B2130_debug.lod"
+- fastpfGo()
+- D:/test/hex/app/app_B2130_debug.lod
+- fastpfChooseLod()
+- restart(false)
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/test/hex/app/app_B2130_debug.lod"
+- fastpfGo()
 - restart(false)
 - fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/test/hex/app/app_B2130_debug.lod"
 - fastpfGo()

@@ -1,4 +1,6 @@
 import os
+import sys 
+import ctypes
 import shutil
 import subprocess
 
@@ -7,9 +9,17 @@ def get_project_addr(name):
         return os.getcwd()
     else:
        return os.path.abspath(name)
+   
+def CSDTK42_DIR():
+    csdtk42_path = os.getenv('GPRS_CSDTK42_PATH')
+    if csdtk42_path is None: 
+        raise EnvironmentError('GPRS_CSDTK42_PATH variable is not set, please execute "A9GTools install"')
+    csdtk42_path = csdtk42_path.replace('\\', '/')
+    return csdtk42_path
+
     
 def build_project(project_addr):
-    app_dir = "C:/CSDTK42/SDK/app"
+    app_dir = os.path.join(CSDTK42_DIR(),"SDK/app")
 
     if os.path.exists(app_dir):
         shutil.rmtree(app_dir)
@@ -25,7 +35,7 @@ def build_project(project_addr):
         print("The project needs the file <projectName>/include/sdk_config.h in order to be built.")
         return
     else:
-        shutil.copy2(os.path.join(src_pro,"include/sdk_config.h"),"C:/CSDTK42/SDK/include/sdk_config.h")
+        shutil.copy2(os.path.join(src_pro,"include/sdk_config.h"),os.path.join(CSDTK42_DIR(),"SDK/include/sdk_config.h"))
 
     for item in os.listdir(src_pro):
         item_path =  os.path.join(src_pro, item)
@@ -38,19 +48,17 @@ def build_project(project_addr):
         elif os.path.isdir(item_path):
             shutil.copytree(item_path, os.path.join(app_dir, item)) 
 
-    os.chdir("C:/CSDTK42/SDK/")
+    os.chdir(os.path.join(CSDTK42_DIR(),"SDK"))
     os.system("build.bat app")
     os.chdir(src_pro)
 
-    hex_path = "C:/CSDTK42/SDK/hex/app" 
+    hex_path = os.path.join(CSDTK42_DIR(),"SDK/hex/app")
     if os.path.exists(hex_path):
         shutil.copytree(hex_path, os.path.join(src_pro,"hex"), dirs_exist_ok=True)
     else: 
         print(f"The directory '{hex_path}' does not exist")
         return 
     
-
-
 def clean_project(project_addr):
     src_pro = get_project_addr(project_addr)
 
@@ -61,17 +69,16 @@ def clean_project(project_addr):
     if os.path.exists(os.path.join(src_pro,"hex")):
         shutil.rmtree(os.path.join(src_pro,"hex"))
     
-    os.chdir("C:/CSDTK42/SDK/")
+    os.chdir(os.path.join(CSDTK42_DIR(),"SDK/"))
     os.system("build.bat clean all")
-    if os.path.exists("C:/CSDTK42/SDK/app"):
-        shutil.rmtree("C:/CSDTK42/SDK/app")
+    if os.path.exists(os.path.join(CSDTK42_DIR(),"SDK/app")):
+        shutil.rmtree(os.path.join(CSDTK42_DIR(),"SDK/app"))
     
     os.chdir(src_pro)
     
-
 def open_coolwatcher():
     subprocess.Popen(
-        "C:/CSDTK42/cooltools/coolwatcher.exe",
+        os.path.join(CSDTK42_DIR(),"cooltools/coolwatcher.exe"),
         shell=True,
         close_fds=True
         )
@@ -80,7 +87,7 @@ def open_coolwatcher():
 def create_project(name):
     project_dir = os.path.abspath(name)  
 
-    source_dir = "C:/CSDTK42/SDK/demo/helloword"
+    source_dir = os.path.join(CSDTK42_DIR(),"SDK/demo/helloword")
 
     try:
         # Crear directorio del proyecto
@@ -124,9 +131,8 @@ def create_fota_pack(project_addr):
         return
 
     fota_pach = os.path.join(src_pro,"hex/fota.pack")
-    os.chdir("C:/CSDTK42/SDK/")
+    os.chdir(os.path.join(CSDTK42_DIR(),"SDK/"))
     os.system(f"build.bat fota {old_file} {new_file} {fota_pach}")
     os.remove(old_file)
-
 
 

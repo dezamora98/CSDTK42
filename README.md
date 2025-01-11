@@ -8,16 +8,17 @@ This repository contains an enhanced SDK for the AiThinker A9G development board
 
 A9GTools provides the following commands to streamline your workflow:
 
-create: Create a new A9G_SDK project.
+* **-install**: Add A9Gtools to the environment variables so that it can be used from any path in the project **(it is necessary to run this command for the first time before starting to use A9GTools)**.
 
-build: Build the project.
+* **create**: Create a new A9G_SDK project.
 
-fota: Build the project and create a FOTA package (requires a previous compilation of the project in the hex folder).
+* **build**: Build the project.
 
-clean: Delete project builds.
+* **fota**: Build the project and create a FOTA package (requires a previous compilation of the project in the hex folder).
 
-coolwatcher: Open CoolWatcher.
+* **clean**: Delete project builds.
 
+* **coolwatcher**: Open CoolWatcher.
 ____
 
 ## Project Structure and Requirements

@@ -161,8 +161,13 @@ def update():
             user_input = input("Do you want to update the repository? (y/n): ").strip().lower()
             if user_input in ['y', 'yes']:
                 # Realizar el pull para actualizar el repositorio local con los cambios del repositorio remoto
-                origin.pull()
-                print(f"Repository at {repo_path} has been updated successfully.")
+                try:
+                    origin.pull()
+                    print(f"Repository at {repo_path} has been updated successfully.")
+                except Exception as e:
+                    # Mostrar detalles del error
+                    error_message = str(e)
+                    print(f"Failed to update the repository at {repo_path}. Error details:\n{error_message}")
             else:
                 print("Update cancelled by the user.")
         else:

@@ -3,6 +3,7 @@ import sys
 import ctypes
 import shutil
 import subprocess
+from git import Repo
 
 def get_project_addr(name):
     if name == "." or name == "":
@@ -135,20 +136,38 @@ def create_fota_pack(project_addr):
     os.system(f"build.bat fota {old_file} {new_file} {fota_pach}")
     os.remove(old_file)
 
-from git import Repo
-
 def update():
     try:
-        repo = Repo(CSDTK42_DIR())
+        repo_path = CSDTK42_DIR()
+        repo = Repo(repo_path)
         
         assert not repo.bare
         
         origin = repo.remotes.origin
-        origin.pull()
         
-        print(f"Repository at {repo_path} has been updated successfully.")
+        # Buscar los cambios remotos sin aplicar
+        fetch_info = origin.fetch()
+        
+        if fetch_info:
+            for info in fetch_info:
+                print(f"Changes for {info.ref.name}:")
+                for commit in repo.iter_commits(f"{info.ref.name}..origin/{info.ref.name}"):
+                    print(f"- {commit.hexsha} {commit.message.strip()}")
+
+            # Preguntar al usuario si desea actualizar
+            user_input = input("Do you want to update the repository? (y/n): ").strip().lower()
+            if user_input in ['y', 'yes']:
+                # Realizar el pull para actualizar el repositorio local con los cambios del repositorio remoto
+                origin.pull()
+                print(f"Repository at {repo_path} has been updated successfully.")
+            else:
+                print("Update cancelled by the user.")
+        else:
+            print("No changes to pull.")
     except Exception as e:
         print(f"Failed to update the repository at {repo_path}. Error: {e}")
 
+# Llamar a la función update
+update()
 
 

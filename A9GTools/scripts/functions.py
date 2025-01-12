@@ -181,4 +181,3 @@ def update():
         print(f"Failed to update the repository at {repo_path}. Error: {e}")
 
 
-

@@ -10,13 +10,13 @@ A9GTools provides the following commands to streamline your workflow:
 
 * **-install**: Add A9Gtools to the environment variables so that it can be used from any path in the project **(it is necessary to run this command for the first time before starting to use A9GTools)**.
 
-* **update**: Update A9Gtools (*this command requires git to be previously installed**)
+* **update**: Update A9Gtools ***(this command requires git to be previously installed)***
 
 * **create**: Create a new A9G_SDK project.
 
 * **build**: Build the project.
 
-* **fota**: Build the project and create a FOTA package (requires a previous compilation of the project in the hex folder).
+* **fota**: Build the project and create a FOTA package ***(requires a previous compilation of the project in the hex folder)***.
 
 * **clean**: Delete project builds.
 

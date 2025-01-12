@@ -136,6 +136,7 @@ def create_fota_pack(project_addr):
     os.system(f"build.bat fota {old_file} {new_file} {fota_pach}")
     os.remove(old_file)
 
+
 def update():
     try:
         repo_path = CSDTK42_DIR()
@@ -145,14 +146,16 @@ def update():
         
         origin = repo.remotes.origin
         
-        # Buscar los cambios remotos sin aplicar
+        # Actualizar las referencias remotas
         fetch_info = origin.fetch()
-        
-        if fetch_info:
-            for info in fetch_info:
-                print(f"Changes for {info.ref.name}:")
-                for commit in repo.iter_commits(f"{info.ref.name}..origin/{info.ref.name}"):
-                    print(f"- {commit.hexsha} {commit.message.strip()}")
+
+        # Verificar si hay cambios que no se han aplicado
+        commits_behind = list(repo.iter_commits('HEAD..origin/master'))
+
+        if commits_behind:
+            print("Changes for origin/master:")
+            for commit in commits_behind:
+                print(f"- {commit.hexsha} {commit.message.strip()}")
 
             # Preguntar al usuario si desea actualizar
             user_input = input("Do you want to update the repository? (y/n): ").strip().lower()
@@ -167,7 +170,6 @@ def update():
     except Exception as e:
         print(f"Failed to update the repository at {repo_path}. Error: {e}")
 
-# Llamar a la función update
-update()
+
 
 

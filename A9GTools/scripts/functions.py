@@ -179,5 +179,3 @@ def update():
             print("No changes to pull.")
     except Exception as e:
         print(f"Failed to update the repository at {repo_path}. Error: {e}")
-
-

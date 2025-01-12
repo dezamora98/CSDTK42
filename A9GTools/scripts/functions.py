@@ -164,7 +164,7 @@ def update():
                 # Realizar el pull para actualizar el repositorio local con los cambios del repositorio remoto
                 try:
                     # Usar subprocess para ejecutar el comando git pull y capturar la salida
-                    result = subprocess.run(['git', 'pull', '-v', 'origin'], cwd=repo_path, text=True, capture_output=True)
+                    result = subprocess.run(['git', 'pull', 'origin', 'master'], cwd=repo_path, text=True, capture_output=True)
                     if result.returncode == 0:
                         print(f"Repository at {repo_path} has been updated successfully.")
                     else:

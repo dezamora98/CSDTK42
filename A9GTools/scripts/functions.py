@@ -135,4 +135,20 @@ def create_fota_pack(project_addr):
     os.system(f"build.bat fota {old_file} {new_file} {fota_pach}")
     os.remove(old_file)
 
+from git import Repo
+
+def update():
+    try:
+        repo = Repo(CSDTK42_DIR())
+        
+        assert not repo.bare
+        
+        origin = repo.remotes.origin
+        origin.pull()
+        
+        print(f"Repository at {repo_path} has been updated successfully.")
+    except Exception as e:
+        print(f"Failed to update the repository at {repo_path}. Error: {e}")
+
+
 

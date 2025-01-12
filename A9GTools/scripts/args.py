@@ -17,5 +17,6 @@ def parse_args(args):
     parser_clean.add_argument("name", nargs="?", default=".", help= "Name or address for project")
 
     subparsers.add_parser("coolwatcher", help = "Open coolwatcher")
+    subparsers.add_parser("update", help = "Update A9Gtools through the https://github.com/dezamora98/CSDTK42")
 
     return parser.parse_args(args)

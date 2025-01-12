@@ -57,7 +57,7 @@ void Main(void *pData)
 {
     while (true)
     {
-        printf("Hello, Word!\n\r");
+        printf("Hello, Word!");
         OS_Sleep(500);
     }
 }

@@ -137,6 +137,7 @@ def create_fota_pack(project_addr):
     os.remove(old_file)
 
 
+
 def update():
     try:
         repo_path = CSDTK42_DIR()
@@ -162,8 +163,12 @@ def update():
             if user_input in ['y', 'yes']:
                 # Realizar el pull para actualizar el repositorio local con los cambios del repositorio remoto
                 try:
-                    origin.pull()
-                    print(f"Repository at {repo_path} has been updated successfully.")
+                    # Usar subprocess para ejecutar el comando git pull y capturar la salida
+                    result = subprocess.run(['git', 'pull', '-v', 'origin'], cwd=repo_path, text=True, capture_output=True)
+                    if result.returncode == 0:
+                        print(f"Repository at {repo_path} has been updated successfully.")
+                    else:
+                        print(f"Failed to update the repository at {repo_path}. Error details:\n{result.stderr}")
                 except Exception as e:
                     # Mostrar detalles del error
                     error_message = str(e)

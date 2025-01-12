@@ -1,4 +1,5 @@
-A9GTools/scripts/__pycache__
+**/__pycache__/
+A9GTools/scripts/args.pyc
 A9GTools/lib/python3.11/site-packages/__pycache__
 SDK/build
 SDK/app

@@ -17,7 +17,6 @@ def CSDTK42_DIR():
         raise EnvironmentError('GPRS_CSDTK42_PATH variable is not set, please execute "A9GTools install"')
     csdtk42_path = csdtk42_path.replace('\\', '/')
     return csdtk42_path
-
     
 def build_project(project_addr):
     app_dir = os.path.join(CSDTK42_DIR(),"SDK/app")
@@ -136,8 +135,6 @@ def create_fota_pack(project_addr):
     os.system(f"build.bat fota {old_file} {new_file} {fota_pach}")
     os.remove(old_file)
 
-
-
 def update():
     try:
         repo_path = CSDTK42_DIR()
@@ -179,3 +176,29 @@ def update():
             print("No changes to pull.")
     except Exception as e:
         print(f"Failed to update the repository at {repo_path}. Error: {e}")
+        
+
+def install():
+    variable_name = "GPRS_CSDTK42_PATH"
+    variable_value =  os.path.dirname(os.path.dirname((os.path.dirname(sys.executable)))).replace("/","\\")
+
+    # Check if the environment variable already exists and has the same value
+    existing_value = os.environ.get(variable_name)
+    if existing_value == variable_value:
+        print(f'The environment variable "{variable_name}" is already set to: {variable_value}')
+        return
+    elif existing_value:
+        print(f'The environment variable "{variable_name}" already exists with a different value: {existing_value}')
+    else:
+        print(f'The environment variable "{variable_name}" does not exist.')
+
+    print("Creating A9GTools environment variables.")
+
+    # Command to set the environment variable at the system level
+    command = f'/c setx {variable_name} "{variable_value}" /M'
+
+    # Request elevated permissions and execute the command
+    ctypes.windll.shell32.ShellExecuteW(None, "runas", "cmd.exe", command, None, 1)
+    
+    print("A9Gtools will be ready to use in any project path after closing this terminal.")
+    input("Press Enter to exit...")  # Wait for user input before exiting

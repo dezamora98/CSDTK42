@@ -18,5 +18,6 @@ def parse_args(args):
 
     subparsers.add_parser("coolwatcher", help = "Open coolwatcher")
     subparsers.add_parser("update", help = "Update A9Gtools through the https://github.com/dezamora98/CSDTK42")
-
+    subparsers.add_parser("install", help = "Add A9Gtools to the environment variables so that it can be used from any path in the project")
+    
     return parser.parse_args(args)

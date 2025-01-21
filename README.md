@@ -8,11 +8,11 @@ This repository contains an enhanced SDK for the AiThinker A9G development board
 
 A9GTools provides the following commands to streamline your workflow:
 
-* **-install**: Add A9Gtools to the environment variables so that it can be used from any path in the project **(it is necessary to run this command for the first time before starting to use A9GTools)**.
+* **install**: Add A9Gtools to the environment variables so that it can be used from any path in the project **(it is necessary to run this command for the first time before starting to use A9GTools)**.
 
 * **update**: Update A9Gtools ***(this command requires git to be previously installed)***
 
-* **create**: Create a new A9G_SDK project.
+* **create**: Create a C or MicroPython project (for micropython projects use -m or --micropython argument).
 
 * **build**: Build the project.
 
@@ -21,6 +21,8 @@ A9GTools provides the following commands to streamline your workflow:
 * **clean**: Delete project builds.
 
 * **coolwatcher**: Open CoolWatcher.
+
+* **rshell**: Open rshell with specified arguments
 ____
 
 ## Project Structure and Requirements

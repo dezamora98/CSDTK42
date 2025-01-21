@@ -84,24 +84,39 @@ def open_coolwatcher():
         )
     return
 
-def create_project(name):
+def create_project(name, micropython):
     project_dir = os.path.abspath(name)  
 
-    source_dir = os.path.join(CSDTK42_DIR(),"SDK/demo/helloword")
-
     try:
-        # Crear directorio del proyecto
         os.makedirs(project_dir, exist_ok=True)
         print(f"Project directory created at: {project_dir}")
 
-        # Copiar contenido del directorio fuente al directorio del proyecto
-        if os.path.exists(source_dir):
+        if micropython:
+            os.makedirs(os.path.join(project_dir, "lib"), exist_ok=True)
+            os.makedirs(os.path.join(project_dir, "tests"), exist_ok=True)
+            os.makedirs(os.path.join(project_dir, "config"), exist_ok=True)
+
+            with open(os.path.join(project_dir, "main.py"), "w") as f:
+                f.write(
+                    'import time\n'
+                    'def main():\n'
+                    '    print("Hello World!")\n'
+                    '    while True:\n'
+                    '        time.sleep(1)\n\n'
+                    'if __name__ == "__main__":\n'
+                    '    main()\n'
+                )
+            with open(os.path.join(project_dir, "boot.py"), "w") as f:
+                f.write("")
+            with open(os.path.join(project_dir, "README.md"), "w") as f:
+                f.write("")
+            print(f"MicroPython project {name} created at {project_dir}")
+            os.system(f"code ./{name}") 
+        else:
+            source_dir = os.path.join(CSDTK42_DIR(),"SDK/demo/helloword")
             shutil.copytree(source_dir, project_dir, dirs_exist_ok=True)
             print(f"Project {name} created at {project_dir} with content from {source_dir}")
-        else:
-            print(f"Source directory {source_dir} does not exist")
-            
-        os.system(f"code ./{name}/.vscode/A9GTools.code-workspace")
+            os.system(f"code ./{name}/.vscode/A9GTools.code-workspace")
 
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -176,7 +191,6 @@ def update():
             print("No changes to pull.")
     except Exception as e:
         print(f"Failed to update the repository at {repo_path}. Error: {e}")
-        
 
 def install():
     variable_name = "GPRS_CSDTK42_PATH"

@@ -1,4 +1,21 @@
 --- 
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "C:/CSDTK42/micropython/micropython_A9G.lod"
+- fastpfGo()
+- restart(false)
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "C:/CSDTK42/micropython/micropython_A9G.lod"
+- fastpfGo()
+- restart(false)
+- restart(false)
+- restart(false)
+- turnoff()
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "C:/CSDTK42/micropython/micropython_A9G.lod"
+- fastpfGo()
+- C:/CSDTK42/micropython/micropython_A9G.lod
+- fastpfChooseLod()
+- restart(false)
+- restart(false)
+- restart(false)
+- restart(false)
 - fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/Desktop/test0/hex/app_B2130_debug.lod"
 - fastpfGo()
 - D:/Desktop/test0/hex/app_B2130_debug.lod

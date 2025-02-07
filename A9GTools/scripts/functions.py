@@ -7,6 +7,7 @@ import tempfile
 from git import Repo
 import re
 from colorama import init, Fore, Style
+from utils import Spinner
 
 def get_project_addr(name):
     if name == "." or name == "":
@@ -172,7 +173,10 @@ def run_fota(old_lod_path: str, new_lod_path: str, output_pack_path: str) -> Non
     print("[OTA] Waiting for making FOTA pack...")
     print("This will take a few minutes...")
 
+    spinner = Spinner()
+
     try:
+        spinner.start()
         tmp_dir = tempfile.mkdtemp(prefix='A9GTools_temp_folder')
 
         # Generar archivos LOD temporales
@@ -204,10 +208,12 @@ def run_fota(old_lod_path: str, new_lod_path: str, output_pack_path: str) -> Non
 
     except subprocess.CalledProcessError as e:
         print(f"Error durante la creación del paquete FOTA: {e}")
+        raise
     finally:
         # Limpiar directorio temporal
         if os.path.exists(tmp_dir):
             shutil.rmtree(tmp_dir)
+        spinner.stop()
 
 def clean_project(project_addr):
     src_pro = get_project_addr(project_addr)

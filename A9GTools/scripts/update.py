@@ -4,6 +4,7 @@ import subprocess
 import argparse
 from git import Repo
 from tqdm import tqdm
+import time
 
 def fetch_repo(repo):
     """Fetch updates from the remote repository."""

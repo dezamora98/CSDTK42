@@ -2,16 +2,17 @@
 ## Don't touch the next line unless you know what you're doing.##
 ## ----------------------------------------------------------- ##
 
-# Name of the module
-LOCAL_NAME := app
 
 # List of submodules which contain code we need to include in the final lib
+LOCAL_MODULE_DEPENDS += init\
+                        libs/utils
+
 LOCAL_API_DEPENDS := \
 
 LOCAL_ADD_INCLUDE := include\
-                    include/std_inc \
-                    include/api_inc \
-                    ${LOCAL_NAME}/include \
+                     include/std_inc\
+                     include/api_inc\
+                    ${LOCAL_NAME}/include\
 
 # Set this to any non-null string to signal a module which 
 # generates a binary (must contain a "main" entry point). 

@@ -15,7 +15,7 @@ LOCAL_API_DEPENDS := \
 LOCAL_ADD_INCLUDE := include \
                      include/std_inc \
                      include/api_inc \
-
+                     $(LOCAL_NAME)/include\
                     
 # `yes` if have submodule or left empty  or `no`
 IS_CONTAIN_SUB_MODULE := no

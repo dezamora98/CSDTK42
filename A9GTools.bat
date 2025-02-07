@@ -24,7 +24,6 @@ if %errorlevel%==0 (
 )
 
 if defined PYTHON_CMD (
-    %VENV_ACTIVATE%
     %VENV_PY% %SCRIPT_PATH% %*
     %VENV_DESACTIVATE%
 ) else (

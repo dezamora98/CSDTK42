@@ -124,10 +124,16 @@ class LOD(object):
     def start_address(self):
         return sorted(self.blocks.keys())[0]
     
+    
     def remove_bootloader(self):
-        for block_base in self.blocks.keys():
-            if(block_base < 0x08010000):#bootloader end address at 0x08010000
+        for block_base in list(self.blocks.keys()):  # <--- Convert to list
+            if block_base < 0x08010000:  # Bootloader end address at 0x08010000
                 del self.blocks[block_base]
+    
+    #def remove_bootloader(self):
+    #    for block_base in self.blocks.keys():
+    #        if(block_base < 0x08010000):#bootloader end address at 0x08010000
+    #            del self.blocks[block_base]
 
 def load_lod(fname):
     lod = LOD()

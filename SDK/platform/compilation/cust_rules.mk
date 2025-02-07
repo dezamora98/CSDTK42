@@ -36,6 +36,27 @@ ifeq "${BUILD_HOST_TYPE}" "LINUX"
 	export COLOR_CYAN=echo -ne "\033[1;36m";
 endif
 
+
+ifeq "$(BUILD_HOST_TYPE)" "WINDOWS"
+	export COLOR_YELLOW=echo -ne "\e[0;33m";
+	export COLOR_NORMAL=echo -ne "\e[0m";
+	export COLOR_BOLD=echo -ne "\e[1m";
+	export COLOR_GREEN=echo -ne "\e[1;32m";
+	export COLOR_PURPLE=echo -ne "\e[1;35m";
+	export COLOR_CYAN=echo -ne "\e[1;36m";
+endif
+
+
+ifeq "$(BUILD_HOST_TYPE)" "CYGWIN"
+	export COLOR_YELLOW=echo -ne "\033[0;33m";
+	export COLOR_NORMAL=echo -ne "\033[0m";
+	export COLOR_BOLD=echo -ne "\033[1m";
+	export COLOR_GREEN=echo -ne "\033[1;32m";
+	export COLOR_PURPLE=echo -ne "\033[1;35m";
+	export COLOR_CYAN=echo -ne "\033[1;36m";
+endif
+
+
 # Check if CT_RELEASE is defined and valid
 ifeq "$(strip $(CT_RELEASE))" ""
     export CT_RELEASE := debug
@@ -83,9 +104,9 @@ export LIBGCC_PATH := ${SOFT_WORKDIR}/platform/lib/gcc/mips-elf/4.4.2
 ###############################################################################
 ## Generic directory names
 ifneq "$(EX_VER)" ""
-  export BUILD_DIR := build/${EX_VER}
+  export BUILD_DIR := ${SOFT_WORKDIR}/build/${EX_VER}
 else
-  export BUILD_DIR := build/${PROJ_NAME}
+  export BUILD_DIR := build#/${PROJ_NAME}
 endif
 
 export OBJ_DIR := obj
@@ -255,13 +276,17 @@ FULL_SRC_OBJECTS := ${foreach obj, ${FULL_SRC_OBJECTS},${OBJ_REL_PATH}/${obj}}
 ########################################################
 # When building a target, we need to build the libraries of the modules 
 # declared as source first
-SRC_DIRS := ${foreach MODULE_PATH, ${SRC_LIBS}, ${MODULE_PATH}}
+SRC_DIRS := $(foreach MODULE_PATH, $(SRC_LIBS), \
+  $(if $(filter $(LOCAL_NAME), $(MODULE_PATH)), \
+    $(PROJECT_DIR), \
+    $(SOFT_WORKDIR)/$(MODULE_PATH))\
+)
 
 # For all dependencies in SRC, rules to call make in dependency modules
-FULL_DEPENDENCY_COMPILE := ${foreach SUBDIR, ${SRC_DIRS}, echo && printf "\n[MAKE]  %s\n" "${SUBDIR}" && ${MAKE} -C ${SOFT_WORKDIR}/${SUBDIR} all && } echo
-FULL_DEPENDENCY_CLEAN := ${foreach SUBDIR, ${SRC_DIRS}, ${MAKE} -C ${SOFT_WORKDIR}/${SUBDIR} cleanstem;}
-FULL_DEPENDENCY_ALLCLEAN := ${foreach SUBDIR, ${SRC_DIRS}, ${MAKE} -C ${SOFT_WORKDIR}/${SUBDIR} allcleanstem;}
-FULL_DEPENDENCY_DEPCLEAN := ${foreach SUBDIR, ${SRC_DIRS}, ${MAKE} -C ${SOFT_WORKDIR}/${SUBDIR} depcleanstem;}
+FULL_DEPENDENCY_COMPILE := $(foreach SUBDIR, $(SRC_DIRS), echo && printf "\n[MAKE]  %s\n" "$(SUBDIR)" && $(MAKE) -C "$(SUBDIR)" all && ) echo
+FULL_DEPENDENCY_CLEAN := $(foreach SUBDIR, $(SRC_DIRS), $(MAKE) -C "$(SUBDIR)" cleanstem;)
+FULL_DEPENDENCY_ALLCLEAN := $(foreach SUBDIR, $(SRC_DIRS), $(MAKE) -C "$(SUBDIR)" allcleanstem;)
+FULL_DEPENDENCY_DEPCLEAN := $(foreach SUBDIR, $(SRC_DIRS), $(MAKE) -C "$(SUBDIR)" depcleanstem;)
 
 #################################
 ## Include path generation ######
@@ -339,7 +364,7 @@ endif
 BINARY_PATH := ${HEX_PATH}/${LODBASE_NO_PATH}
 
 # Change the location where everything is compiled.
-BIN_PATH := ${BUILD_ROOT}/${LOCAL_NAME}
+BIN_PATH := ${BUILD_ROOT}#/${LOCAL_NAME}
 
 BAS := ${BIN_PATH}/${LODBASE_NO_PATH}
 BIN := ${BAS}.elf
@@ -449,13 +474,13 @@ endif #AM_CONFIG_SUPPORT
 
 ifneq "${AM_PLT_LOD_FILE}" ""
 PLT_LOD_VERSION := $(shell echo ${AM_PLT_LOD_FILE} | sed 's/.*SW_V\([0-9]*\).*\.lod$$/B\1/')
-WITH_PLT_LOD_FILE := ${BAS_FINAL}_${PLT_LOD_VERSION}_${CT_RELEASE}.lod
-WITH_PLT_OTA_FILE := ${BAS_FINAL}_${PLT_LOD_VERSION}_${CT_RELEASE}_ota.lod
+WITH_PLT_LOD_FILE := ${LODBASE}${PLT_LOD_VERSION}_${CT_RELEASE}.lod
+WITH_PLT_OTA_FILE := ${LODBASE}${PLT_LOD_VERSION}_${CT_RELEASE}_ota.lod
 CFG_Lod_File_WITH_PLT := `echo ${BAS_FINAL}_\`echo ${AM_PLT_LOD_FILE} | sed 's/.*SW_V\([0-9]*\).*\.lod$$/B\1/'\`.lod  | sed 's/.*\(SW_.*\.lod\)$$/\1/'`
 endif
 
 AM_PROJ_CFP_FILE_DIR=$(SOFT_WORKDIR)/init
-DES_CFP_FILE_DIR=${HEX_PATH}/${LODBASE_NO_PATH}/
+DES_CFP_FILE_DIR=${LODBASE}/${LODBASE_NO_PATH}/
 AM_CFP_FILE_NAME:=`find $(AM_PROJ_CFP_FILE_DIR) -name "*.cfp"`
 AM_CFP_FILE_CNT:=`find $(AM_PROJ_CFP_FILE_DIR) -name "*.cfp" | wc -l`
 
@@ -785,11 +810,11 @@ ifeq ($(strip $(USER_LOADER_SUPPORT)), )
 	${OBJCOPY} --strip-symbols=${STRIP_SYMBOL_FILE} ${BAS_FINAL}.elf ${BAS_FINAL}.elf
 	
 	#�ϲ�elf
-	${ELFCOMBINE_TOOL} -e1 ${BAS_FINAL}.elf -e2 ${BINARY_PATH}/${AM_PLT_ELF_FILE_BASENAME} -o ${BIN_FINAL}
+	${ELFCOMBINE_TOOL} -e1 ${HEX_PATH}/${BAS_FINAL}.elf -e2 ${HEX_PATH}/${BINARY_PATH}/${AM_PLT_ELF_FILE_BASENAME} -o ${BIN_FINAL}
 
 	#ɾ�����������elf
 	-rm -f ${BAS_FINAL}.elf
-	-rm -f ${BINARY_PATH}/${AM_PLT_ELF_FILE_BASENAME}
+	-rm -f ${HEX_PATH}/${BINARY_PATH}/${AM_PLT_ELF_FILE_BASENAME}
 	@${ECHO}
 else
 	@${ECHO} "ElfCombine        Elf binary & map file"

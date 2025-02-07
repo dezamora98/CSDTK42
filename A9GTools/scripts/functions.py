@@ -52,9 +52,7 @@ def make(project_addr, mode = "debug"):
         f"{os.getenv('ptemp')};"
         f"{os.getenv('CSDTKMAKEDIR')};"
         f"{os.getenv('CSDTK4INSTALLDIR')}\\perl\\bin;"
-        #f"{os.getenv('CSDTK4INSTALLDIR')}\\python27;"
         f"{os.getenv('CSDTK4INSTALLDIR')}\\mips-elf-4.4.2\\bin;"
-       # f"{os.getenv('CSDTK4INSTALLDIR')}\\nanopb-0.3.9;"
         f"{os.getenv('PATH')}"
     )
 

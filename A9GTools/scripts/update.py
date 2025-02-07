@@ -2,92 +2,123 @@ import os
 import sys
 import subprocess
 import argparse
-from git import Repo
-from tqdm import tqdm
 import time
+from git import Repo
+from tqdm import tqdm # type: ignore
+from itertools import cycle
+from threading import Thread
 
-def fetch_repo(repo):
-    """Fetch updates from the remote repository."""
-    try:
-        origin = repo.remotes.origin
-        origin.fetch()
-    except Exception as e:
-        print(f"Failed to fetch from origin: {e}")
-        raise
+class Spinner:
+    def __init__(self):
+        self.spinner = cycle(["⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷"])
+        self.running = False
+        self.thread = None
 
-def get_commits_behind(repo):
-    """Get the number of commits that are behind the remote master branch."""
-    try:
-        return len(list(repo.iter_commits("HEAD..origin/master")))
-    except Exception as e:
-        print(f"Failed to get commits behind: {e}")
-        raise
+    def spin(self):
+        while self.running:
+            sys.stdout.write(next(self.spinner))
+            sys.stdout.flush()
+            time.sleep(0.1)
+            sys.stdout.write("\b")
 
-def pull_changes(repo_path):
-    """Pull changes from the remote repository with a progress indicator."""
+    def start(self):
+        self.running = True
+        self.thread = Thread(target=self.spin)
+        self.thread.start()
+
+    def stop(self):
+        self.running = False
+        if self.thread:
+            self.thread.join()
+        sys.stdout.write(" \b")
+
+def fetch_repo(repo_path):
+    """Realiza fetch y muestra progreso real usando la salida de git."""
     try:
-        # Start the git pull process
         process = subprocess.Popen(
-            ["git", "pull", "origin", "master"],
+            ["git", "fetch", "origin", "master"],
             cwd=repo_path,
-            stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
         )
 
-        # Monitor the process and display progress
-        with tqdm(total=100, desc="Updating", unit="%") as pbar:
-            while process.poll() is None:  # While the process is running
-                time.sleep(0.1)  # Simulate a small delay
-                pbar.update(1)  # Increment the progress bar
+        progress_bar = tqdm(desc="Downloading changes", unit="B", unit_scale=True)
 
-        # Check the result of the process
-        stdout, stderr = process.communicate()
-        if process.returncode == 0:
-            print(f"Repository at {repo_path} has been updated successfully.")
-        else:
-            print(f"Failed to update the repository at {repo_path}. Error details:\n{stderr}")
+        while True:
+            output = process.stderr.readline()
+            if not output and process.poll() is not None:
+                break
+            if "Receiving objects" in output:
+                parts = output.split()
+                for part in parts:
+                    if "%" in part:
+                        percent = int(part.split("%")[0])
+                        progress_bar.n = percent
+                        progress_bar.refresh()
+            elif "MiB" in output: 
+                parts = output.split()
+                for part in parts:
+                    if "MiB" in part and "/" in part:
+                        received = float(part.split("MiB")[0])
+                        total = 100  
+                        progress_bar.n = received
+                        progress_bar.total = total
+                        progress_bar.refresh()
+
+        progress_bar.close()
+        if process.returncode != 0:
+            raise subprocess.CalledProcessError(process.returncode, "git fetch")
+
     except Exception as e:
-        print(f"Failed to update the repository at {repo_path}. Error details:\n{e}")
+        print(f"\nFailed to fetch: {e}")
         raise
 
+def merge_changes(repo_path):
+    """Realiza merge con un spinner para indicar actividad."""
+    spinner = Spinner()
+    try:
+        spinner.start()
+        repo = Repo(repo_path)
+        repo.git.merge("origin/master")
+    except Exception as e:
+        print(f"\nFailed to merge: {e}")
+        raise
+    finally:
+        spinner.stop()
+
 def update(repo_path):
-    """Update the repository if there are new changes."""
     try:
         repo = Repo(repo_path)
-        
         assert not repo.bare
 
-        fetch_repo(repo)
+        print("Checking for updates...")
+        fetch_repo(repo_path)  # Fetch con barra de progreso real
 
-        commits_behind = get_commits_behind(repo)
-
+        commits_behind = len(list(repo.iter_commits("HEAD..origin/master")))
         if commits_behind:
-            print(f"There are {commits_behind} new changes pending.")
-            user_input = input("Do you want to update the repository? (y/n): ").strip().lower()
+            print(f"\nFound {commits_behind} new changes.")
+            user_input = input("Do you want to update? (y/n): ").lower()
             if user_input in ["y", "yes"]:
-                print("Updating the repository...")
-                pull_changes(repo_path)
+                print("Merging changes...")
+                merge_changes(repo_path)  # Merge con spinner
+                print("\nUpdate completed successfully!")
             else:
-                print("Update cancelled by the user.")
+                print("Update cancelled.")
         else:
-            print("No changes to pull.")
+            print("Already up to date.")
+
     except Exception as e:
-        print(f"Failed to update the repository at {repo_path}. Error: {e}")
+        print(f"\nError: {e}")
 
 def main():
-    """Main function to handle command-line arguments and execute the update."""
-    parser = argparse.ArgumentParser(
-        description="A9GTools_Updater is a simple program to update A9Gtools through the https://github.com/dezamora98/CSDTK42"
-    )
-    parser.add_argument("-v", "--version", action="version", version="A9GTools_Updater BETA-0.0.1")
-    parser.add_argument("-p", "--path", default=os.getenv("GPRS_CSDTK42_PATH"), help="Path to CSDTK directory")
+    parser = argparse.ArgumentParser(description="Update tool for A9GTools")
+    parser.add_argument("-p", "--path", default=os.getenv("GPRS_CSDTK42_PATH"), help="Path to repository")
+    args = parser.parse_args()
 
-    args = parser.parse_args(sys.argv[1:])
-
-    if not os.path.exists(args.path) or args.path is None:
-        print("CSDTK repository path is not correct")
+    if not os.path.exists(args.path):
+        print("Invalid repository path!")
         return
+
     update(args.path)
 
 if __name__ == "__main__":

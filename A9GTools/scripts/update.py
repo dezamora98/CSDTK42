@@ -3,6 +3,7 @@ import sys
 import subprocess
 import argparse
 from git import Repo
+from tqdm import tqdm
 
 def fetch_repo(repo):
     """Fetch updates from the remote repository."""
@@ -14,26 +15,37 @@ def fetch_repo(repo):
         raise
 
 def get_commits_behind(repo):
-    """Get the list of commits that are behind the remote master branch."""
+    """Get the number of commits that are behind the remote master branch."""
     try:
-        return list(repo.iter_commits("HEAD..origin/master"))
+        return len(list(repo.iter_commits("HEAD..origin/master")))
     except Exception as e:
         print(f"Failed to get commits behind: {e}")
         raise
 
 def pull_changes(repo_path):
-    """Pull changes from the remote repository."""
+    """Pull changes from the remote repository with a progress indicator."""
     try:
-        result = subprocess.run(
+        # Start the git pull process
+        process = subprocess.Popen(
             ["git", "pull", "origin", "master"],
             cwd=repo_path,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             text=True,
-            capture_output=True,
         )
-        if result.returncode == 0:
+
+        # Monitor the process and display progress
+        with tqdm(total=100, desc="Updating", unit="%") as pbar:
+            while process.poll() is None:  # While the process is running
+                time.sleep(0.1)  # Simulate a small delay
+                pbar.update(1)  # Increment the progress bar
+
+        # Check the result of the process
+        stdout, stderr = process.communicate()
+        if process.returncode == 0:
             print(f"Repository at {repo_path} has been updated successfully.")
         else:
-            print(f"Failed to update the repository at {repo_path}. Error details:\n{result.stderr}")
+            print(f"Failed to update the repository at {repo_path}. Error details:\n{stderr}")
     except Exception as e:
         print(f"Failed to update the repository at {repo_path}. Error details:\n{e}")
         raise
@@ -50,14 +62,10 @@ def update(repo_path):
         commits_behind = get_commits_behind(repo)
 
         if commits_behind:
-            print("Changes for origin/master:")
-            for commit in commits_behind:
-                print(f"- {commit.hexsha} {commit.message.strip()}")
-
+            print(f"There are {commits_behind} new changes pending.")
             user_input = input("Do you want to update the repository? (y/n): ").strip().lower()
             if user_input in ["y", "yes"]:
                 print("Updating the repository...")
-                # Simulate progress bar while pulling changes
                 pull_changes(repo_path)
             else:
                 print("Update cancelled by the user.")

@@ -1,25 +1,21 @@
-
-
-
-
 # Name of the this module
-LOCAL_NAME := libs/gps
+LOCAL_NAME := $(CURDIR)
 
 
 # Space-separated list of modules (libraries) your module depends upon.
 # These should include the toplevel name, e.g. "libs/gps"
-LOCAL_MODULE_DEPENDS :=  libs/gps/minmea \
+LOCAL_MODULE_DEPENDS :=  ${SOFT_WORKDIR}/libs/gps/minmea \
 
 
 # Add includes from other modules we do not wish to link to
-LOCAL_API_DEPENDS := libs/utils \
+LOCAL_API_DEPENDS := ${SOFT_WORKDIR}/libs/utils \
 
 
 # include folder
-LOCAL_ADD_INCLUDE := include \
-                     include/std_inc \
-                     include/api_inc \
-                     libs/gps/minmea/src \
+LOCAL_ADD_INCLUDE := ${SOFT_WORKDIR}/include \
+                     ${SOFT_WORKDIR}/include/std_inc \
+                     ${SOFT_WORKDIR}/include/api_inc \
+                     ${SOFT_WORKDIR}/libs/gps/minmea/src \
 
                     
 # `yes` if have submodule or left empty  or `no`
@@ -28,13 +24,13 @@ IS_CONTAIN_SUB_MODULE := yes
 ## ------------------------------------ ##
 ## 	Add your custom flags here          ##
 ## ------------------------------------ ##
-MYCFLAGS += 
+MYCFLAGS += \
 
 ## ------------------------------------- ##
 ##	List all your sources here           ##
 ## ------------------------------------- ##
 S_SRC := ${notdir ${wildcard src/*.s}}
-C_SRC := ${notdir ${wildcard src/*.c}}
+C_SRC := ${notdir ${wildcard ${LOCAL_NAME}/src/*.c}}
 
 
 

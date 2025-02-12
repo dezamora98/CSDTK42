@@ -5,7 +5,6 @@
 #include "stdint.h"
 #include "api_hal_uart.h"
 #include "stdarg.h"
-#include "sdk_config.h"
 
 void Trace_MemBlock(uint16_t nIndex, uint8_t *buffer, uint16_t len, uint8_t radix)
 {

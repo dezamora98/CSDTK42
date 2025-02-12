@@ -14,11 +14,11 @@
 
 #ifndef _USERGEN
 #ifndef size_t
-typedef unsigned int                size_t;
+typedef unsigned long               size_t;
 #endif
 
 #ifndef ssize_t
-typedef int                         ssize_t;
+typedef long                        ssize_t;
 #endif
 #define SSIZE_MAX INT_MAX
 #endif

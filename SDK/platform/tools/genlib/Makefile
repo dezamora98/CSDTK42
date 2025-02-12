@@ -1,11 +1,9 @@
-
-
 # Name of the module
-LOCAL_NAME := csdk
+LOCAL_NAME := $(CURDIR)
 
 # Depends module
-LOCAL_MODULE_DEPENDS += init
-LOCAL_MODULE_DEPENDS += libs
+LOCAL_MODULE_DEPENDS := ${SOFT_WORKDIR}/init\
+						 ${SOFT_WORKDIR}/libs
 
 # Set this to any non-null string to signal a module which
 # generates a binary (must contain a "main" entry point). 

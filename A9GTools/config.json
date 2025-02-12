@@ -1,0 +1,18 @@
+{
+    "CSDTK_PATH": "{GPRS_CSDTK42_PATH}",
+    "A9GTools": "BETA-0.1.0",
+    "CSDTK": "4.2.0",
+    "ptemp": "{GPRS_CSDTK42_PATH}\\SDK\\platform\\compilation\\win32",
+    "SDK_PATH": "{GPRS_CSDTK42_PATH}\\SDK",
+    "memd": "{GPRS_CSDTK42_PATH}\\SDK\\platform\\csdk\\memd.def",
+    "python": "{GPRS_CSDTK42_PATH}\\python",
+    "rshell": "{GPRS_CSDTK42_PATH}\\python\\Scripts\\rshell.exe",
+    "make": "{GPRS_CSDTK42_PATH}\\make64",
+    "perl": "{GPRS_CSDTK42_PATH}\\perl\\bin",
+    "gcc": "{GPRS_CSDTK42_PATH}\\mips-elf-4.4.2\\bin",
+    "lodtool": "{GPRS_CSDTK42_PATH}\\SDK\\platform\\compilation\\lodtool.py",
+    "fotacreate": "{GPRS_CSDTK42_PATH}\\SDK\\platform\\compilation\\fota\\fotacreate.exe",
+    "coolwatcher": "{GPRS_CSDTK42_PATH}\\cooltools\\coolwatcher.exe",
+    "demo_mp": "{GPRS_CSDTK42_PATH}\\SDK\\demo\\mp",
+    "demo_c": "{GPRS_CSDTK42_PATH}\\SDK\\demo\\c"
+}

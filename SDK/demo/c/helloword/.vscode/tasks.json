@@ -1,0 +1,62 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "a9gTools",
+            "args": [
+                "build"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "coolwatcher",
+            "command": "a9gTools",
+            "type": "shell",
+            "args": [
+                "coolwatcher"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "clean",
+            "command": "a9gTools",
+            "type": "shell",
+            "args": [
+                "clean"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+    ]
+}

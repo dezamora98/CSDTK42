@@ -16,7 +16,7 @@ A9GTools provides the following commands to streamline your workflow:
 
 * **build**: Build the project.
 
-* **fota**: Build the project and create a FOTA package ***(requires a previous compilation of the project in the hex folder)***.
+* **fota**: Build the project and create a FOTA package ***(A9GTools fota --old <old_lod> --new <new_lod> --out <output_pack>)***.
 
 * **clean**: Delete project builds.
 
@@ -33,8 +33,10 @@ When you create a new project using the **A9GTools create <project_name>** comma
 
 ```/
 <project_name>/
-├── include/
+├── config/
 │   └── sdk_config.h
+├── include/
+│   └── file1.h
 ├── src/
 │   └── Main.c
 └── Makefile
@@ -67,9 +69,13 @@ void Main(void *pData)
 
 **2. include:**
 
-* Description: the **include** directory must contain all project headers or other header directories, and must also contain the sdk_config.h file. This configuration file includes various settings needed for the SDK. It must be located in the **include** directory and must be configured correctly to match the requirements of your project.
+* Description: the **include** directory must contain all project headers or other header directories
 
-**Simple example of file <project_name>/include/sdk_config.h:**
+**3. config:**
+
+* Description: the **config** folder must contain the sdk_config.h file. This configuration file includes various settings required for the SDK (this file can be empty and a default configuration will be set, but it should always be).
+
+**Simple example of file <project_name>/config/sdk_config.h:**
 
 ```C
 #ifndef _SDK_CONFIG_H_

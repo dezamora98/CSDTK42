@@ -14,7 +14,7 @@
 #include <api_network.h>
 #include <api_socket.h>
 #include <api_fota.h>
-#include <sdk_config.h>
+#include <sdk_default.h>
 #include <sdk_init.h>
 /*#########################################################################################*/
 /*please don't change anything in the following function*/
@@ -129,7 +129,7 @@ void user_Init(T_INTERFACE_VTBL_TAG *pVtable)
 }
 /*#########################################################################################*/
 
-#if ENABLE_UART_FOTA
+#if ENABLE_UART_FOTA != 0
 #define FOTA_UART_HEADER "fsize"
 #define FOTA_UART_SIZE sizeof(FOTA_UART_HEADER) - 1
 
@@ -138,7 +138,7 @@ void user_Init(T_INTERFACE_VTBL_TAG *pVtable)
 static void FOTA_ReceivedFileData(uint8_t *data, uint16_t len)
 {
     static int fotasize = 0;
-    uint32_t pos = (uint32_t)strstr(data,"\r\n");
+    uint32_t pos = (uint32_t)strstr(data, "\r\n");
     debug("uart received data,length:%d,data: %d, pos: ", len, (pos));
     MEMBLOCK_Trace(1, data, len, 16);
     if (fotasize == 0 && memcmp(data, FOTA_UART_HEADER, FOTA_UART_SIZE) == 0)
@@ -198,18 +198,18 @@ upgrade_faile:
     return;
 }
 */
+#endif // !ENABLE_UART_FOTA
 
-#else
-
-#define FOTA_UartInit(uart, config) ((void)0)
-
-#endif
 
 static void OSTask(void *pv)
 {
     API_Event_t *pEvent = NULL;
     setIOInterface();
+
+
+#if ENABLE_UART_FOTA != 0
     FOTA_UartInit(UART1, DEFAULT_FOTA_UART_CONFIG);
+#endif
 
     OS_StartCallbackTimer(osTaskHandle, USER_APP_START_MS, StartUserAPP, NULL);
 
@@ -264,7 +264,8 @@ static void OSTask(void *pv)
             case API_EVENT_ID_UART_RECEIVED: // param1: uart number, param2: length, pParam1: data
                 if (EventManagment_UART != NULL)
                     EventManagment_UART(pEvent);
-#if ENABLE_UART_FOTA
+
+#if ENABLE_UART_FOTA != 0
                 else if (bootState)
                 {
                     uint8_t data[pEvent->param2 + 1];

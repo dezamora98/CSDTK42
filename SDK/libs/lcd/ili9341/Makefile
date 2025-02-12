@@ -1,9 +1,5 @@
-
-
-
-
 # Name of the this module
-LOCAL_NAME := libs/lcd/ili9341
+LOCAL_NAME := $(CURDIR)
 
 
 # Space-separated list of modules (libraries) your module depends upon.
@@ -14,13 +10,12 @@ LOCAL_MODULE_DEPENDS :=  \
 # Add includes from other modules we do not wish to link to
 LOCAL_API_DEPENDS :=  \
 
-
 # include folder
-LOCAL_ADD_INCLUDE := include \
-                     include/std_inc \
-                     include/api_inc \
-                     libs/lcd/include \
-                     libs/lcd/ili9341/include 
+LOCAL_ADD_INCLUDE := ${SOFT_WORKDIR}/include \
+                     ${SOFT_WORKDIR}/include/std_inc \
+                     ${SOFT_WORKDIR}/include/api_inc \
+                     ${SOFT_WORKDIR}/libs/lcd/include \
+                     ${SOFT_WORKDIR}/libs/lcd/ili9341/include 
 
 
                     
@@ -30,13 +25,13 @@ IS_CONTAIN_SUB_MODULE := no
 ## ------------------------------------ ##
 ## 	Add your custom flags here          ##
 ## ------------------------------------ ##
-MYCFLAGS += 
+MYCFLAGS += \
 
 ## ------------------------------------- ##
 ##	List all your sources here           ##
 ## ------------------------------------- ##
-S_SRC := ${notdir ${wildcard src/*.s}}
-C_SRC := ${notdir ${wildcard src/*.c}}
+S_SRC := ${notdir ${wildcard ${LOCAL_NAME}/src/*.s}}
+C_SRC := ${notdir ${wildcard ${LOCAL_NAME}/src/*.c}}
 
 
 ## ------------------------------------------------------------------- ##

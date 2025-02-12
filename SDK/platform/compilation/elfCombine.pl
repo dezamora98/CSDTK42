@@ -132,7 +132,7 @@ sub read_elf_section
     my $vmastr;
     my $lmastr;
     my ($str,$vma_start,$vma_end,$lma_start,$lma_end,$len);
-    
+
     die "Cannot find input elf file: $elf_file" if( ! -f $elf_file);
     open FH, '-|', "$objdump -h $elf_file" or die "Cannot run objdunp($!)";
     while( <FH> )
@@ -339,15 +339,15 @@ else
     
     dbg_out("1", "parameter ok");
 
-    my $cwd = getcwd();
-    my $index1 = index($input_elf_file_1,$cwd)+length($cwd)+1;
-    my $index2 = length($input_elf_file_1);
-    $input_elf_file_1 = substr($input_elf_file_1,$index1,$index2);
-    # print "\n----$input_elf_file_1------\n";
-    $index1 = index($input_elf_file_2,$cwd)+length($cwd)+1;
-    $index2 = length($input_elf_file_2);
-    $input_elf_file_2 = substr($input_elf_file_2,$index1,$index2);
-    # print "\n----$input_elf_file_2------\n";
+    # my $cwd = getcwd();
+    # my $index1 = index($input_elf_file_1,$cwd)+length($cwd)+1;
+    # my $index2 = length($input_elf_file_1);
+    # $input_elf_file_1 = substr($input_elf_file_1,$index1,$index2);
+    # # print "\n----$input_elf_file_1------\n";
+    # $index1 = index($input_elf_file_2,$cwd)+length($cwd)+1;
+    # $index2 = length($input_elf_file_2);
+    # $input_elf_file_2 = substr($input_elf_file_2,$index1,$index2);
+    # # print "\n----$input_elf_file_2------\n";
 
     elf_combine();
 

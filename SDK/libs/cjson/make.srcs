@@ -4,6 +4,3 @@ cJSON.c \
 cJSON_Utils.c
 
 
-SOURCE_INCLUDE := \
-${LOCAL_NAME}/src
-

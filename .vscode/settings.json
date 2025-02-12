@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.cpp": "cpp",
+        "format": "cpp",
+        "vector": "cpp",
+        "functional": "c",
+        "string": "cpp",
+        "cstdlib": "cpp",
+        "api_debug.h": "c",
+        "sdk_default.h": "c",
+        "sdk_init.h": "c"
+    }
+}

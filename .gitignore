@@ -4,3 +4,6 @@ A9GTools/lib/python3.11/site-packages/__pycache__
 SDK/build
 SDK/app
 SDK/hex
+SDK/include/config
+cooltools/logs
+cooltools/coolwatcher.html

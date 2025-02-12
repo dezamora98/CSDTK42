@@ -1,9 +1,5 @@
-
-
-
-
 # Name of the this module
-LOCAL_NAME := libs/gps/minmea
+LOCAL_NAME := $(CURDIR)
 
 
 # Space-separated list of modules (libraries) your module depends upon.
@@ -16,9 +12,9 @@ LOCAL_API_DEPENDS :=  \
 
 
 # include folder
-LOCAL_ADD_INCLUDE := include \
-                     include/std_inc \
-                     include/api_inc \
+LOCAL_ADD_INCLUDE := ${SOFT_WORKDIR}/include \
+                     ${SOFT_WORKDIR}/include/std_inc \
+                     ${SOFT_WORKDIR}/include/api_inc \
 
 
                     

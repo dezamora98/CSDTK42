@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${env:GPRS_CSDTK42_PATH}/SDK/include/**",
+                "${env:GPRS_CSDTK42_PATH}/SDK/libs/**",
+                "${env:GPRS_CSDTK42_PATH}/SDK/init"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "${env:GPRS_CSDTK42_PATH}/SDK/include",
+                    "${env:GPRS_CSDTK42_PATH}/SDK/libs",
+                    "${env:GPRS_CSDTK42_PATH}/SDK/init"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            },
+            "cStandard": "c99",
+            "configurationProvider": "A9GTools",
+            "compilerPath": "${env:GPRS_CSDTK42_PATH}/A9GTools.bat",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}

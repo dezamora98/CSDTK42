@@ -1,9 +1,5 @@
-
-
-
-
 # Name of the this module
-LOCAL_NAME := libs/cjson
+LOCAL_NAME := $(CURDIR)
 # cJSON 1.7.7 2018.7.28 add by neucrack from https://github.com/DaveGamble/cJSON
 
 # Space-separated list of modules (libraries) your module depends upon.
@@ -16,10 +12,10 @@ LOCAL_API_DEPENDS := \
 
 
 # include folder
-LOCAL_ADD_INCLUDE := include \
-                     include/std_inc \
-                     include/api_inc \
-                     ${SOURCE_INCLUDE} \
+LOCAL_ADD_INCLUDE := ${SOFT_WORKDIR}/include \
+                     ${SOFT_WORKDIR}/include/std_inc \
+                     ${SOFT_WORKDIR}/include/api_inc \
+                     ${SOFT_WORKDIR}/libs/cjson/src \
 
                     
 # `yes` if have submodule or left empty  or `no`

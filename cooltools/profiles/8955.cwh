@@ -1,4 +1,42 @@
 --- 
+- activateTracerGui()
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/Desktop/test2/build/bin/test2_B2130_debug.lod"
+- fastpfGo()
+- D:/Desktop/test2/build/bin/test2_B2130_debug.lod
+- fastpfChooseLod()
+- restart(false)
+- activateTracerGui()
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/Desktop/test/build/bin/test_B2130_debug.lod"
+- fastpfGo()
+- D:/Desktop/test/build/bin/test_B2130_debug.lod
+- fastpfChooseLod()
+- restart(false)
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/Desktop/test/build/bin/test_B2130_debug.lod"
+- fastpfGo()
+- D:/Desktop/test/build/bin/test_B2130_debug.lod
+- fastpfChooseLod()
+- restart(false)
+- restart(false)
+- restart(false)
+- showHelp &
+- showUserGuide &
+- restart(false)
+- cwRefreshWatches
+- Thread.list.each { |t| t.kill }; &
+- $CMDTHREAD.kill; &
+- restart(false)
+- restart(false)
+- fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "D:/Desktop/test/build/bin/test_B2130_debug.lod"
+- fastpfGo()
+- C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod
+- fastpfChooseFlashProgrammer()
+- D:/Desktop/test/build/bin/test_B2130_debug.lod
+- fastpfChooseLod()
+- restart(false)
+- restart(false)
+- restart(false)
+- restart(false)
+- restart(false)
 - fastpfGo "C:/CSDTK42/cooltools/ramrom/host_8955_flsh_spi32m_ramrun.lod", "C:/CSDTK42/micropython/micropython_A9G.lod"
 - fastpfGo()
 - restart(false)
@@ -61,10 +99,3 @@
 - restart(false)
 - restart(false)
 - restart(false)
-- restart(false)
-- restart(false)
-- restart(false)
-- "?"
-- fastpfChooseFlashProgrammer()
-- D:/Program/CSDTK42_old/cooltools/chipgen/Modem2G/toolpool/plugins/fastpf/flash_programmers/host_8955_flsh_spi32m_ramrun.lod
-- fastpfChooseFlashProgrammer()

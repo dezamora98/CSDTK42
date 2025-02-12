@@ -8,13 +8,9 @@
 
 void Assert(bool valid, const char *fmt);
 
-#define assert(valid) \
-do {\
-\
-    extern char outBuffer[256];\
-    sprintf(outBuffer, "FILE:(%s) | LINE:(%d)", __FILE__, __LINE__);\
-    if (!(valid))\
-        __assert(outBuffer);\
-} while(0)
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+#define ASSERT_MSG "File: " __FILE__ " | Line: " TOSTRING(__LINE__)
+#define assert(valid) Assert(valid, ASSERT_MSG)
 
 #endif

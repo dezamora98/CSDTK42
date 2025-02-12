@@ -1,29 +1,27 @@
 # Name of the this module
-LOCAL_NAME := libs/lvgl
+LOCAL_NAME := $(CURDIR)
 
 
 # Space-separated list of modules (libraries) your module depends upon.
 # These should include the toplevel name, e.g. "libs/gps"
-LOCAL_MODULE_DEPENDS := 
-
+LOCAL_MODULE_DEPENDS := \
 
 
 # Add includes from other modules we do not wish to link to
-LOCAL_API_DEPENDS := libs/utils \
-
+LOCAL_API_DEPENDS := ${SOFT_WORKDIR}/libs/utils \
 
 # include folder
-LOCAL_ADD_INCLUDE := include \
-                     include/std_inc \
-                     include/api_inc \
-                     libs/lvgl \
-                     libs/lvgl/src \
-                     libs/lvgl/src/lv_core \
-                     libs/lvgl/src/lv_draw \
-                     libs/lvgl/src/lv_hal \
-                     libs/lvgl/src/lv_misc \
-                     libs/lvgl/src/lv_objx \
-                     libs/lvgl/src/lv_themes 
+LOCAL_ADD_INCLUDE := ${SOFT_WORKDIR}/include \
+                     ${SOFT_WORKDIR}/include/std_inc \
+                     ${SOFT_WORKDIR}/include/api_inc \
+                     ${LOCAL_NAME} \
+                     ${LOCAL_NAME}/src \
+                     ${LOCAL_NAME}/src/lv_core \
+                     ${LOCAL_NAME}/src/lv_draw \
+                     ${LOCAL_NAME}/src/lv_hal \
+                     ${LOCAL_NAME}/src/lv_misc \
+                     ${LOCAL_NAME}/src/lv_objx \
+                     ${LOCAL_NAME}/src/lv_themes \
 
                     
 # `yes` if have submodule or left empty  or `no`
@@ -32,7 +30,7 @@ IS_CONTAIN_SUB_MODULE := no
 ## ------------------------------------ ##
 ## 	Add your custom flags here          ##
 ## ------------------------------------ ##
-MYCFLAGS += 
+MYCFLAGS += \
 
 LOCAL_EXPORT_FLAG += LVGL_CONFIG_FILE=\"${CFG_LVGL_CONFIG_FILE}\"
 
@@ -41,7 +39,7 @@ LOCAL_EXPORT_FLAG += LVGL_CONFIG_FILE=\"${CFG_LVGL_CONFIG_FILE}\"
 ##	List all your sources here           ##
 ## ------------------------------------- ##
 S_SRC := ${notdir ${wildcard src/*.s}}
-C_SRC := ${notdir ${wildcard src/*.c}}
+C_SRC := ${notdir ${wildcard ${LOCAL_NAME}/src/*.c}}
 C_SRC_FILES +=  ${wildcard src/lv_core/*.c} \
                 ${wildcard src/lv_draw/*.c} \
                 ${wildcard src/lv_hal/*.c} \

@@ -40,8 +40,9 @@ typedef void (*PTASK_FUNC_T)(void* pParameter);
 typedef void (*OS_CALLBACK_FUNC_T)(void* param);
 
 HANDLE getMainTaskHandle(void);
+HANDLE getOsTaskHandle(void);
 bool getSysReady(void);
-#define MainTaskHandle getMainTaskHandle
-#define OSTaskHandle getOsTaskHandle
+#define MainTaskHandle getMainTaskHandle()
+#define OSTaskHandle getOsTaskHandle()
 
 #endif

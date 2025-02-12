@@ -9,7 +9,7 @@ extern "C"
 #include "stddef.h"
 #include <stdarg.h>
 #include "sdk_init.h"
-#include "sdk_config.h"
+#include "sdk_default.h"
 #include "api_debug.h"
 #include "api_hal_uart.h"
 
@@ -108,7 +108,7 @@ extern "C"
  * @param ... Additional arguments
  */
 
-#if defined(IO_INTERFACE) &&  IO_INTERFACE != 0 //!TARCE
+#if IO_INTERFACE != 0 //!TARCE
 #define printf(format, ...) uPrintf(IO_INTERFACE, format, ##__VA_ARGS__)
 #else
 #define printf(format, ...) tPrintf(format, ##__VA_ARGS__)

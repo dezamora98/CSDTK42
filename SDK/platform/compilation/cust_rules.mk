@@ -103,11 +103,9 @@ export LIBGCC_PATH := ${SOFT_WORKDIR}/platform/lib/gcc/mips-elf/4.4.2
 # Generic environment stuff
 ###############################################################################
 ## Generic directory names
-ifneq "$(EX_VER)" ""
-  export BUILD_DIR := ${SOFT_WORKDIR}/build/${EX_VER}
-else
-  export BUILD_DIR := build#/${PROJ_NAME}
-endif
+
+export BUILD_DIR := build
+
 
 export OBJ_DIR := obj
 export SRC_DIR := src
@@ -118,11 +116,7 @@ export INC_DIR := include
 # BUILD_ROOT is the base of the build tree,
 # just like SOFT_WORKDIR is that of the source tree
 # It defaults to  ${SOFT_WORKDIR}/${BUILD_DIR} when OBJECT_DIR is not set.
-ifneq "$(OBJECT_DIR)" ""
 export BUILD_ROOT := ${OBJECT_DIR}/${BUILD_DIR}
-else
-export BUILD_ROOT := ${SOFT_WORKDIR}/${BUILD_DIR}
-endif
 
 export HEX_PATH ?= ${SOFT_WORKDIR}/hex
 
@@ -170,25 +164,18 @@ $(error Recursive make reached level 40, there is probably a cycle in your modul
 endif #MAKELEVEL 40
 
 # Absolute path to PWD, from the Makefile
-LOCAL_PATH := ${SOFT_WORKDIR}/${LOCAL_NAME}
+LOCAL_PATH := ${LOCAL_NAME}
 # Corresponding path within the build tree
-LOCAL_SHADOW_PATH := ${BUILD_ROOT}/${LOCAL_NAME}
+LOCAL_SHADOW_PATH := ${BUILD_ROOT}
 
 # Module name.
 MODULE_NAME := ${notdir ${LOCAL_NAME}}
 
-# LOCAL_*_DIR == abstract for *_DIR, more generic (takes into account IS_ENTRY_POINT
-# where we have no src/, etc...)
-# For use as relative path
-ifneq "${IS_ENTRY_POINT}" "yes"
-    LOCAL_SRC_DIR := ${SRC_DIR}
-    LOCAL_INC_DIR := ${INC_DIR}
-    LOCAL_LIB_DIR := ${LIB_DIR}
-else
-    LOCAL_SRC_DIR := .
-    LOCAL_INC_DIR := .
-    LOCAL_LIB_DIR := .
-endif #IS_ENTRY_POINT
+
+LOCAL_SRC_DIR := ${SRC_DIR}
+LOCAL_INC_DIR := ${INC_DIR}
+LOCAL_LIB_DIR := ${LIB_DIR}
+
 
 ## Corresponding absolute paths
 # In source tree
@@ -218,30 +205,19 @@ export LOD_TO_BIN =$(SOFT_WORKDIR)/platform/compilation/ZbxLodToBin.exe
 # List all the modules that are declared as source
 # ----------------------------------------------------------------------
 SRC_LIBS := ${LOCAL_MODULE_DEPENDS}
-SRC_LIBRARY_PATH := ${foreach MODULE_PATH, ${SRC_LIBS}, -L${BUILD_ROOT}/${MODULE_PATH}/${LIB_DIR} }
-SRC_LIBRARY_FILES := ${foreach MODULE_PATH, ${SRC_LIBS}, ${BUILD_ROOT}/${MODULE_PATH}/${LIB_DIR}/lib${notdir ${MODULE_PATH}}_${CT_RELEASE}.a }
 
-BINARY_LIBRARY_PATH := 
-BINARY_LIBRARY_FILES := 
+ifeq "$(strip $(IS_ENTRY_POINT))" "yes"
+	SRC_LIBRARY_PATH := -L${BUILD_ROOT}/${notdir ${MODULE_PATH}}${LIB_DIR}
+else
+	SRC_LIBRARY_PATH := ${foreach MODULE_PATH, ${SRC_LIBS}, -L${BUILD_ROOT}/${notdir ${MODULE_PATH}}${LIB_DIR} }
+endif
 
-# Local built binary libs path and files: in $BUILD_ROOT
-BINARY_LIBRARY_PATH += ${foreach MODULE_PATH, ${LOCAL_BUILT_BINARY_LIBS}, -L${BUILD_ROOT}/${MODULE_PATH}/${LIB_DIR} }
-BINARY_LIBRARY_FILES += ${foreach MODULE_PATH, ${LOCAL_BUILT_BINARY_LIBS}, ${BUILD_ROOT}/${MODULE_PATH}/${LIB_DIR}/lib${notdir ${MODULE_PATH}}_${CT_RELEASE}.a }
+SRC_LIBRARY_FILES := ${foreach MODULE_PATH, ${SRC_LIBS}, ${BUILD_ROOT}/${LIB_DIR}/lib${notdir ${MODULE_PATH}}_${CT_RELEASE}.a }
 
-# Binary libs path and files : in $SOFT_WORKDIR
-BINARY_LIBRARY_PATH += ${foreach MODULE_PATH, ${BINARY_LIBS}, -L${SOFT_WORKDIR}/${MODULE_PATH}/${LIB_DIR} }
-BINARY_LIBRARY_FILES += ${foreach MODULE_PATH, ${BINARY_LIBS}, ${SOFT_WORKDIR}/${MODULE_PATH}/${LIB_DIR}/lib${notdir ${MODULE_PATH}}_${CT_RELEASE}.a }
-
-# Local libs path and files : in $SOFT_WORKDIR
-LOCAL_ADD_LIBRARY_PATH := ${foreach MODULE_PATH, ${LOCAL_LIBS}, -L${SOFT_WORKDIR}/${dir ${MODULE_PATH}}}
-LOCAL_ADD_LIBRARY_PATH :=${subst lib/,lib,${LOCAL_ADD_LIBRARY_PATH}}
-# LOCAL_LIBS is already a file list:
-#LOCAL_ADD_LIBRARY_FILES := ${foreach MODULE_PATH, ${LOCAL_LIBS}, ${SOFT_WORKDIR}/${MODULE_PATH}/${notdir ${MODULE_PATH}}}
-LOCAL_ADD_LIBRARY_FILES := ${foreach FILE_PATH, ${LOCAL_LIBS}, ${SOFT_WORKDIR}/${FILE_PATH}}
 # Full libraries path used for linking -L<path_to_library>
-FULL_LIBRARY_PATH := ${SRC_LIBRARY_PATH} ${BINARY_LIBRARY_PATH} ${LOCAL_ADD_LIBRARY_PATH}
+FULL_LIBRARY_PATH := ${SRC_LIBRARY_PATH}
 # List all library files for dependencies checking full_path+"lib"+libname.a
-FULL_LIBRARY_FILES := ${SRC_LIBRARY_FILES} ${BINARY_LIBRARY_FILES} ${LOCAL_ADD_LIBRARY_FILES}
+FULL_LIBRARY_FILES := ${SRC_LIBRARY_FILES}
 # List all libraries used for linking -l(no path, just names without prefix lib)
 FULL_LIBRARY_EXT := ${foreach MODULE_PATH, ${FULL_LIBRARY_FILES}, -l${patsubst lib%,%,${basename ${notdir ${MODULE_PATH}}}}}
 
@@ -255,7 +231,7 @@ ifneq "$(strip $(IS_TOP_LEVEL))" "yes"
 endif
 
 ifeq "$(IS_TOP_LEVEL_)" "yes"
-FULL_LIBRARY_OBJECTS := ${foreach lib, ${LOCAL_MODULE_DEPENDS}, ${BUILD_ROOT}/${lib}/${OBJ_DIR}/${CT_RELEASE}/*.o} 
+FULL_LIBRARY_OBJECTS := ${foreach lib, ${LOCAL_MODULE_DEPENDS}, ${BUILD_ROOT}/${notdir ${lib}}/${OBJ_DIR}/${CT_RELEASE}/*.o} 
 endif
 
 # ----------------------------------------------------------------------
@@ -276,11 +252,7 @@ FULL_SRC_OBJECTS := ${foreach obj, ${FULL_SRC_OBJECTS},${OBJ_REL_PATH}/${obj}}
 ########################################################
 # When building a target, we need to build the libraries of the modules 
 # declared as source first
-SRC_DIRS := $(foreach MODULE_PATH, $(SRC_LIBS), \
-  $(if $(filter $(LOCAL_NAME), $(MODULE_PATH)), \
-    $(PROJECT_DIR), \
-    $(SOFT_WORKDIR)/$(MODULE_PATH))\
-)
+SRC_DIRS := ${foreach MODULE_PATH, ${SRC_LIBS}, ${MODULE_PATH}}
 
 # For all dependencies in SRC, rules to call make in dependency modules
 FULL_DEPENDENCY_COMPILE := $(foreach SUBDIR, $(SRC_DIRS), echo && printf "\n[MAKE]  %s\n" "$(SUBDIR)" && $(MAKE) -C "$(SUBDIR)" all && ) echo
@@ -293,21 +265,21 @@ FULL_DEPENDENCY_DEPCLEAN := $(foreach SUBDIR, $(SRC_DIRS), $(MAKE) -C "$(SUBDIR)
 #################################
 # LOCAL_API_DEPENDS
 # list all the include from LOCAL_API_DEPENDS
-DEPENDENCY_INCLUDE_PATH := ${foreach module, ${LOCAL_API_DEPENDS}, -I${SOFT_WORKDIR}/${module}/${INC_DIR} }
+DEPENDENCY_INCLUDE_PATH := ${foreach module, ${LOCAL_API_DEPENDS}, -I${module}/${INC_DIR} }
 
 # ADD all the include from LOCAL_MODULE_DEPENDS 
 # (if we depend on a module, we depend on its include also)
-DEPENDENCY_INCLUDE_PATH += ${foreach module, ${LOCAL_MODULE_DEPENDS}, -I${SOFT_WORKDIR}/${module}/${INC_DIR} }
+DEPENDENCY_INCLUDE_PATH += ${foreach module, ${LOCAL_MODULE_DEPENDS}, -I${module}/${INC_DIR} }
 
 # List LOCAL_ADD_INCLUDE header retrieving path
-MYINCLUDEDIR := ${foreach tmpDir, ${LOCAL_ADD_INCLUDE}, -I${SOFT_WORKDIR}/${tmpDir}}
+MYINCLUDEDIR := ${foreach tmpDir, ${LOCAL_ADD_INCLUDE}, -I${tmpDir}}
 
 # Root include directory
 ROOT_INCLUDE	:= ${SOFT_WORKDIR}/${INC_DIR}
 
 # Final include path
 # ROOT_INCLUDE at the end because DEPENDENCY_INCLUDE_PATH must be allowed to supersede it (e.g. for sxs_type.h)
-INCLUDE_PATH	:= ${MYINCLUDEDIR} -I${LOCAL_INC_DIR} -I${LOCAL_SRC_DIR} ${DEPENDENCY_INCLUDE_PATH}  -I${ROOT_INCLUDE}
+INCLUDE_PATH	:= ${MYINCLUDEDIR} -I${INCLUDE_CONFIG_PATH} -I${LOCAL_INC_DIR} -I${LOCAL_SRC_DIR} ${DEPENDENCY_INCLUDE_PATH}  -I${ROOT_INCLUDE} -I${ROOT_INCLUDE}/std_inc -I${ROOT_INCLUDE}/api_inc
 
 ###################################################################################
 # Linker script generation
@@ -354,17 +326,15 @@ LOCAL_SRCLIBRARY := ${LIB_PATH}/${LOCAL_LIBRARY_NOTDIR}
 # This one can be overwritten by packed libraries.
 LOCAL_BINLIBRARY ?= ${BINLIB_PATH}/${LOCAL_LIBRARY_NOTDIR}
 
-ifneq "$(EX_VER)" ""
-    LODBASE_NO_PATH := ${EX_VER}
-else
-    LODBASE_NO_PATH := ${PROJ_NAME}
-endif
+
+LODBASE_NO_PATH := ${PROJ_NAME}
+
 
 # Path for storing all the generated files for one test (elf, dis, lod...).
-BINARY_PATH := ${HEX_PATH}/${LODBASE_NO_PATH}
+BINARY_PATH ?= ${HEX_PATH}/${LODBASE_NO_PATH}
 
 # Change the location where everything is compiled.
-BIN_PATH := ${BUILD_ROOT}#/${LOCAL_NAME}
+BIN_PATH ?= ${BUILD_ROOT}
 
 BAS := ${BIN_PATH}/${LODBASE_NO_PATH}
 BIN := ${BAS}.elf
@@ -810,11 +780,11 @@ ifeq ($(strip $(USER_LOADER_SUPPORT)), )
 	${OBJCOPY} --strip-symbols=${STRIP_SYMBOL_FILE} ${BAS_FINAL}.elf ${BAS_FINAL}.elf
 	
 	#�ϲ�elf
-	${ELFCOMBINE_TOOL} -e1 ${HEX_PATH}/${BAS_FINAL}.elf -e2 ${HEX_PATH}/${BINARY_PATH}/${AM_PLT_ELF_FILE_BASENAME} -o ${BIN_FINAL}
+	${ELFCOMBINE_TOOL} -e1 ${BAS_FINAL}.elf -e2 ${BINARY_PATH}/${AM_PLT_ELF_FILE_BASENAME} -o ${BIN_FINAL}
 
 	#ɾ�����������elf
 	-rm -f ${BAS_FINAL}.elf
-	-rm -f ${HEX_PATH}/${BINARY_PATH}/${AM_PLT_ELF_FILE_BASENAME}
+	-rm -f ${BINARY_PATH}/${AM_PLT_ELF_FILE_BASENAME}
 	@${ECHO}
 else
 	@${ECHO} "ElfCombine        Elf binary & map file"

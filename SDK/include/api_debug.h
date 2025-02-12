@@ -2,7 +2,7 @@
 #define __API_DEBUG_H_
 
 #include "sdk_init.h"
-#include "sdk_config.h"
+#include "sdk_default.h"
 #include "api_inc_uart.h"
 #include "api_hal_uart.h"
 
@@ -36,15 +36,6 @@ void Trace_MemBlock(uint16_t nIndex, uint8_t *buffer, uint16_t len, uint8_t radi
 #define tPrintf(format, ...) Trace(1, format, ##__VA_ARGS__)
 
 /**
- * @brief Macro for printing debug information with file and line info
- *
- * @param format Format string
- * @param ... Additional arguments
- */
-#define uDebug(format, ...) \
-  uPrintf(IO_INTERFACE, "%s:%d: " format "\n\r", __FILE__, __LINE__, ##__VA_ARGS__)
-
-/**
  * @brief Print debug information to Trace interface "(MMI1)"
  * @param format Format string
  * @param ... Additional arguments
@@ -52,11 +43,24 @@ void Trace_MemBlock(uint16_t nIndex, uint8_t *buffer, uint16_t len, uint8_t radi
 #define tDebug(format, ...) Trace(1, "%s:%d: " format "\n\r", __FILE__, __LINE__, ##__VA_ARGS__)
 
 /**
+ * @brief Macro for printing debug information with file and line info
+ *
+ * @param format Format string
+ * @param ... Additional arguments
+ */
+#if IO_INTERFACE != 0 // !TRACE
+#define uDebug(format, ...) \
+  uPrintf(IO_INTERFACE, "%s:%d: " format "\n\r", __FILE__, __LINE__, ##__VA_ARGS__)
+else
+#define uDebug(format, ...) tDebug(format, ##__VA_ARGS__)
+#endif
+
+/**
  * @brief Macro for printing debug information based on UART I/O state
  * @param format Format string
  * @param ... Additional arguments
  */
-#if DEBUG_LOG_ENABLE
+#if DEBUG_LOG_ENABLE == 1
 #if IO_INTERFACE != 0 // !TRACE
 #define debug(format, ...) uDebug(format, ##__VA_ARGS__)
 /**
